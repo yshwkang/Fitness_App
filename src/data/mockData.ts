@@ -71,13 +71,13 @@ export const weeklyProgress = {
   completed: 2,
   total: 3,
   days: [
-    { label: '월', done: true },
-    { label: '화', done: false },
-    { label: '수', done: true },
-    { label: '목', done: false },
-    { label: '금', done: false },
-    { label: '토', done: false },
-    { label: '일', done: false },
+    { label: '월', date: '8/31', done: true },
+    { label: '화', date: '9/1', done: false },
+    { label: '수', date: '9/2', done: true },
+    { label: '목', date: '9/3', done: false },
+    { label: '금', date: '9/4', done: false },
+    { label: '토', date: '9/5', done: false },
+    { label: '일', date: '9/6', done: false },
   ],
 };
 

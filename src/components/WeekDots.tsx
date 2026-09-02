@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native';
 import { colors, fontFamily, fontSize, spacing } from '../theme';
 
-type Day = { label: string; done: boolean };
+type Day = { label: string; date: string; done: boolean };
 
 export function WeekDots({ days }: { days: Day[] }) {
   return (
@@ -10,6 +10,7 @@ export function WeekDots({ days }: { days: Day[] }) {
         <View key={i} style={styles.item}>
           <View style={[styles.dot, day.done && styles.dotDone]} />
           <Text style={styles.label}>{day.label}</Text>
+          <Text style={styles.date}>{day.date}</Text>
         </View>
       ))}
     </View>
@@ -41,5 +42,10 @@ const styles = StyleSheet.create({
     fontFamily: fontFamily.medium,
     fontSize: fontSize.xs,
     color: colors.textSecondary,
+  },
+  date: {
+    fontFamily: fontFamily.regular,
+    fontSize: 10,
+    color: colors.textTertiary,
   },
 });
