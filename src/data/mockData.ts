@@ -34,6 +34,35 @@ export const initialExerciseLogs: ExerciseLog[] = [
     sets: [
       { id: 'sr-1', set: 1, kg: 40, reps: 12, done: false },
       { id: 'sr-2', set: 2, kg: 40, reps: 12, done: false },
+      { id: 'sr-3', set: 3, kg: 40, reps: 10, done: false },
+    ],
+  },
+  {
+    id: 'barbell-row',
+    name: '바벨로우',
+    sets: [
+      { id: 'br-1', set: 1, kg: 50, reps: 10, done: false },
+      { id: 'br-2', set: 2, kg: 50, reps: 10, done: false },
+      { id: 'br-3', set: 3, kg: 50, reps: 8, done: false },
+    ],
+  },
+  {
+    id: 'one-arm-row',
+    name: '원암 덤벨로우',
+    sets: [
+      { id: 'or-1', set: 1, kg: 22, reps: 12, done: false },
+      { id: 'or-2', set: 2, kg: 22, reps: 12, done: false },
+      { id: 'or-3', set: 3, kg: 22, reps: 10, done: false },
+    ],
+  },
+  {
+    id: 'barbell-curl',
+    name: '바벨 컬',
+    sets: [
+      { id: 'bc-1', set: 1, kg: 30, reps: 12, done: false },
+      { id: 'bc-2', set: 2, kg: 30, reps: 12, done: false },
+      { id: 'bc-3', set: 3, kg: 30, reps: 10, done: false },
+      { id: 'bc-4', set: 4, kg: 25, reps: 12, done: false },
     ],
   },
 ];
