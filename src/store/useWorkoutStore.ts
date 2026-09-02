@@ -7,6 +7,7 @@ type WorkoutState = {
   memo: string;
   toggleSetDone: (exerciseId: string, setId: string) => void;
   addSet: (exerciseId: string) => void;
+  addExercise: (name: string) => void;
   setCondition: (value: number) => void;
   setMemo: (value: string) => void;
   resetWorkout: () => void;
@@ -52,6 +53,29 @@ export const useWorkoutStore = create<WorkoutState>((set) => ({
         };
       }),
     })),
+
+  addExercise: (name) =>
+    set((state) => {
+      const exerciseId = `custom-${Date.now()}-${state.exercises.length}`;
+      return {
+        exercises: [
+          ...state.exercises,
+          {
+            id: exerciseId,
+            name,
+            sets: [
+              {
+                id: `${exerciseId}-1`,
+                set: 1,
+                kg: 0,
+                reps: 0,
+                done: false,
+              },
+            ],
+          },
+        ],
+      };
+    }),
 
   setCondition: (value) => set({ condition: value }),
   setMemo: (value) => set({ memo: value }),

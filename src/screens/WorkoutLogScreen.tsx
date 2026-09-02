@@ -2,7 +2,8 @@ import { Ionicons } from '@expo/vector-icons';
 import type { BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 import type { CompositeScreenProps } from '@react-navigation/native';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { useState } from 'react';
+import { Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 import { Card } from '../components/Card';
 import { PrimaryButton } from '../components/PrimaryButton';
 import { ScreenContainer } from '../components/ScreenContainer';
@@ -19,6 +20,17 @@ export function WorkoutLogScreen({ navigation }: Props) {
   const exercises = useWorkoutStore((s) => s.exercises);
   const toggleSetDone = useWorkoutStore((s) => s.toggleSetDone);
   const addSet = useWorkoutStore((s) => s.addSet);
+  const addExercise = useWorkoutStore((s) => s.addExercise);
+  const [isAddingExercise, setIsAddingExercise] = useState(false);
+  const [exerciseName, setExerciseName] = useState('');
+
+  const handleAddExercise = () => {
+    const name = exerciseName.trim();
+    if (!name || exercises.some((exercise) => exercise.name === name)) return;
+    addExercise(name);
+    setExerciseName('');
+    setIsAddingExercise(false);
+  };
 
   return (
     <ScreenContainer>
@@ -70,6 +82,44 @@ export function WorkoutLogScreen({ navigation }: Props) {
           </Pressable>
         </Card>
       ))}
+
+      {isAddingExercise ? (
+        <View style={styles.addExercisePanel}>
+          <Text style={styles.addExerciseTitle}>새 종목 이름</Text>
+          <TextInput
+            autoFocus
+            value={exerciseName}
+            onChangeText={setExerciseName}
+            onSubmitEditing={handleAddExercise}
+            placeholder="예: 덤벨 숄더프레스"
+            placeholderTextColor={colors.textTertiary}
+            returnKeyType="done"
+            style={styles.exerciseInput}
+          />
+          <View style={styles.addExerciseActions}>
+            <Pressable
+              onPress={() => {
+                setExerciseName('');
+                setIsAddingExercise(false);
+              }}
+              style={styles.cancelButton}
+            >
+              <Text style={styles.cancelLabel}>취소</Text>
+            </Pressable>
+            <Pressable onPress={handleAddExercise} style={styles.confirmButton}>
+              <Text style={styles.confirmLabel}>추가</Text>
+            </Pressable>
+          </View>
+        </View>
+      ) : (
+        <Pressable
+          onPress={() => setIsAddingExercise(true)}
+          style={styles.addExerciseButton}
+        >
+          <Ionicons name="add-circle-outline" size={20} color={colors.primary} />
+          <Text style={styles.addExerciseLabel}>새 종목 추가</Text>
+        </Pressable>
+      )}
 
       <PrimaryButton
         label="운동 완료"
@@ -152,5 +202,68 @@ const styles = StyleSheet.create({
     fontFamily: fontFamily.medium,
     fontSize: fontSize.sm,
     color: colors.primary,
+  },
+  addExerciseButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 6,
+    paddingVertical: spacing.md,
+    marginBottom: spacing.sm,
+  },
+  addExerciseLabel: {
+    fontFamily: fontFamily.bold,
+    fontSize: fontSize.base,
+    color: colors.primary,
+  },
+  addExercisePanel: {
+    padding: spacing.lg,
+    marginBottom: spacing.sm,
+    borderRadius: radius.lg,
+    borderWidth: 1,
+    borderColor: colors.border,
+    backgroundColor: colors.surface,
+  },
+  addExerciseTitle: {
+    marginBottom: spacing.sm,
+    fontFamily: fontFamily.bold,
+    fontSize: fontSize.base,
+    color: colors.textPrimary,
+  },
+  exerciseInput: {
+    paddingHorizontal: spacing.md,
+    paddingVertical: spacing.sm + 2,
+    borderRadius: radius.sm,
+    borderWidth: 1,
+    borderColor: colors.border,
+    fontFamily: fontFamily.medium,
+    fontSize: fontSize.base,
+    color: colors.textPrimary,
+  },
+  addExerciseActions: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    gap: spacing.sm,
+    marginTop: spacing.md,
+  },
+  cancelButton: {
+    paddingHorizontal: spacing.md,
+    paddingVertical: spacing.sm,
+  },
+  cancelLabel: {
+    fontFamily: fontFamily.medium,
+    fontSize: fontSize.sm,
+    color: colors.textSecondary,
+  },
+  confirmButton: {
+    paddingHorizontal: spacing.lg,
+    paddingVertical: spacing.sm,
+    borderRadius: radius.sm,
+    backgroundColor: colors.primary,
+  },
+  confirmLabel: {
+    fontFamily: fontFamily.bold,
+    fontSize: fontSize.sm,
+    color: '#FFFFFF',
   },
 });
